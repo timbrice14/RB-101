@@ -7,16 +7,19 @@ def valid_number?(num)
 end
 
 def operation_to_message(op)
-  case op
-  when '1'
-    'Adding'
-  when '2'
-    'Subtracting'
-  when '3'
-    'Multiplying'
-  when '4'
-    'Dividing'
-  end
+
+  operation = case op
+                when '1'
+                  'adding'
+                when '2'
+                  'subtracting'
+                when '3'
+                  'multiplying'
+                when '4'
+                  'dividing'
+              end
+
+  "We are #{operation} the two numbers."
 end
 
 prompt("Welcome to Calculator! Enter your name:")
@@ -80,7 +83,7 @@ loop do # main loop
     end
   end
 
-  prompt("#{operation_to_message(operator)} the two numbers.")
+  prompt(operation_to_message(operator))
 
   result = case operator
            when '1'
