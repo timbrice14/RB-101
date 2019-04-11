@@ -25,43 +25,47 @@ def operation_to_message(op)
   "We are #{operation} the two numbers."
 end
 
-prompt(MESSAGES['welcome'])
+def messages(message, lang='en')
+  MESSAGES[lang][message]
+end
+
+prompt(messages('welcome', 'en'))
 
 name = ''
 loop do
   name = Kernel.gets().chomp()
 
   if name.empty?()
-    prompt(MESSAGES['valid_name'])
+    prompt(messages('valid_name', 'en'))
   else
     break
   end
 end
 
-prompt(MESSAGES['hi'] + " #{name}!")
+prompt(messages('hi', 'en') + " #{name}!")
 
 loop do # main loop
   number1 = ''
   loop do
-    prompt(MESSAGES['first_number'])
+    prompt(messages('first_number', 'en'))
     number1 = Kernel.gets().chomp()
 
     if valid_number?(number1)
       break
     else
-      prompt(MESSAGES['invalid_number'])
+      prompt(messages('invalid_number', 'en'))
     end
   end
 
   number2 = ''
   loop do
-    prompt(MESSAGES['second_number'])
+    prompt(messages('second_number', 'en'))
     number2 = Kernel.gets().chomp()
 
     if valid_number?(number2)
       break
     else
-      prompt(MESSAGES['invalid_number'])
+      prompt(messages('invalid_number', 'en'))
     end
   end
 
@@ -82,7 +86,7 @@ loop do # main loop
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt(MESSAGES['operator_error'])
+      prompt(messages('operator_error', 'en'))
     end
   end
 
@@ -99,11 +103,11 @@ loop do # main loop
              number1.to_f() / number2.to_f()
   end
 
-  prompt(MESSAGES['result'] + " #{result}")
+  prompt(messages('result', 'en') + " #{result}")
 
-  prompt(MESSAGES['calculate_again'])
+  prompt(messages('calculate_again', 'en'))
   answer = Kernel.gets().chomp()
   break unless answer.downcase().start_with?('y')
 end
 
-prompt(MESSAGES['thank_you'])
+prompt(messages('thank_you', 'en'))
