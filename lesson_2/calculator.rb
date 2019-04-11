@@ -3,7 +3,7 @@ def prompt(message)
 end
 
 def valid_number?(num)
-  num.to_i != 0
+  /\d+/.match(num)
 end
 
 def operation_to_message(op)
