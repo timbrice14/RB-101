@@ -18,11 +18,11 @@ def calculate_monthly_payment(total_amount, annual_percentage_rate,
 end
 
 def valid_number?(number)
-  /\d+/.match(number)
+  /\d+/.match(number) && number.to_i > 0
 end
 
 def valid_float?(number)
-  /\.\d+/.match(number)
+  /\.\d+/.match(number) && number.to_f > 0
 end
 
 def messages(message)
