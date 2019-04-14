@@ -14,7 +14,7 @@ def calculate_monthly_payment(total_amount, annual_percentage_rate,
   j = monthly_interest_rate(annual_percentage_rate)
   n = loan_duration_in_months(loan_duration)
 
-  total_amount.to_i * (j / (1 - (1 + j) ** (-n)))
+  total_amount.to_i * (j / (1 - (1 + j)**-n))
 end
 
 def valid_number?(number)
@@ -78,5 +78,7 @@ loop do
   end
 end
 
-monthly_payment = calculate_monthly_payment(total_amount, annual_percentage_rate, loan_duration)
+monthly_payment = calculate_monthly_payment(total_amount,
+                                            annual_percentage_rate,
+                                            loan_duration)
 puts format(messages('monthly_payment'), payment: monthly_payment)
