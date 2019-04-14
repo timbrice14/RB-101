@@ -21,7 +21,11 @@ def calculate_monthly_payment(total_amount, annual_percentage_rate,
 end
 
 def valid_number?(number)
-  number.to_i.to_s == number
+  /\d+/.match(number)
+end
+
+def valid_float?(number)
+  /\.\d+/.match(number)
 end
 
 def messages(message)
@@ -59,7 +63,7 @@ annual_percentage_rate = ''
 loop do
   puts messages('annual_percentage_rate')
   annual_percentage_rate = gets.chomp
-  if valid_number?(annual_percentage_rate)
+  if valid_float?(annual_percentage_rate)
     break
   else
     puts messages('invalid_annual_percentage_rate')
