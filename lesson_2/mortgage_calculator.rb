@@ -1,21 +1,18 @@
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_calculator_messages.yml')
 
-def monthly_interest(annual_percentage_rate)
+def monthly_interest_rate(annual_percentage_rate)
   annual_percentage_rate.to_f / 12
 end
 
 def loan_duration_in_months(loan_duration)
-  loan_duration.to_f / 12
+  loan_duration.to_i * 12
 end
 
 def calculate_monthly_payment(total_amount, annual_percentage_rate,
                               loan_duration)
-  j = monthly_interest(annual_percentage_rate)
+  j = monthly_interest_rate(annual_percentage_rate)
   n = loan_duration_in_months(loan_duration)
-
-  puts "Value of j is #{j}"
-  puts "Value of na is #{n}"
 
   total_amount.to_i * (j / (1 - (1 + j) ** (-n)))
 end
