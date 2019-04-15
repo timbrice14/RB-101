@@ -43,7 +43,7 @@ loop do
   end
 end
 
-puts format(messages('user_input'), name: 'Tim')
+puts format(messages('user_input'), name: name)
 
 total_amount = ''
 loop do
