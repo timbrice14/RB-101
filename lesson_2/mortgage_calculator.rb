@@ -36,7 +36,7 @@ name = ''
 loop do
   name = gets.chomp
 
-  if name.empty?
+  if name.strip.empty?
     puts messages('invalid_name')
   else
     break
