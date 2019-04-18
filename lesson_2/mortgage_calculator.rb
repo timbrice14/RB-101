@@ -21,6 +21,51 @@ def retrieve_user_name
   puts format(messages('user_input'), name: name)
 end
 
+def retrieve_total_amount
+  total_amount = ''
+  loop do
+    puts messages('total_amount')
+    total_amount = gets.chomp
+    if valid_loan_amount?(total_amount)
+      break
+    else
+      puts messages('invalid_total_amount')
+    end
+  end
+
+  total_amount
+end
+
+def retrieve_apr
+  annual_percentage_rate = ''
+  loop do
+    puts messages('annual_percentage_rate')
+    annual_percentage_rate = gets.chomp
+    if valid_apr?(annual_percentage_rate)
+      break
+    else
+      puts messages('invalid_annual_percentage_rate')
+    end
+  end
+
+  annual_percentage_rate
+end
+
+def retrieve_loan_duration
+  loan_duration = ''
+  loop do
+    puts messages('total_duration')
+    loan_duration = gets.chomp
+    if valid_loan_duration?(loan_duration)
+      break
+    else
+      puts messages('invalid_total_duration')
+    end
+  end
+
+  loan_duration
+end
+
 def monthly_interest_rate(annual_percentage_rate)
   (annual_percentage_rate.to_f / 100) / 12
 end
@@ -55,39 +100,9 @@ end
 
 display_welcome
 retrieve_user_name
-
-total_amount = ''
-loop do
-  puts messages('total_amount')
-  total_amount = gets.chomp
-  if valid_loan_amount?(total_amount)
-    break
-  else
-    puts messages('invalid_total_amount')
-  end
-end
-
-annual_percentage_rate = ''
-loop do
-  puts messages('annual_percentage_rate')
-  annual_percentage_rate = gets.chomp
-  if valid_apr?(annual_percentage_rate)
-    break
-  else
-    puts messages('invalid_annual_percentage_rate')
-  end
-end
-
-loan_duration = ''
-loop do
-  puts messages('total_duration')
-  loan_duration = gets.chomp
-  if valid_loan_duration?(loan_duration)
-    break
-  else
-    puts messages('invalid_total_duration')
-  end
-end
+total_amount = retrieve_total_amount
+annual_percentage_rate = retrieve_apr
+loan_duration = retrieve_loan_duration
 
 monthly_payment = calculate_monthly_payment(total_amount,
                                             annual_percentage_rate,
