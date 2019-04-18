@@ -1,6 +1,26 @@
 require 'yaml'
 MESSAGES = YAML.load_file('mortgage_calculator_messages.yml')
 
+def display_welcome
+  puts messages('welcome')
+  puts messages('enter_name')
+end
+
+def retrieve_user_name
+  name = ''
+  loop do
+    name = gets.chomp
+
+    if name.strip.empty?
+      puts messages('invalid_name')
+    else
+      break
+    end
+  end
+
+  puts format(messages('user_input'), name: name)
+end
+
 def monthly_interest_rate(annual_percentage_rate)
   (annual_percentage_rate.to_f / 100) / 12
 end
@@ -33,21 +53,8 @@ def messages(message)
   ">> #{MESSAGES[message]}"
 end
 
-puts messages('welcome')
-puts messages('enter_name')
-
-name = ''
-loop do
-  name = gets.chomp
-
-  if name.strip.empty?
-    puts messages('invalid_name')
-  else
-    break
-  end
-end
-
-puts format(messages('user_input'), name: name)
+display_welcome
+retrieve_user_name
 
 total_amount = ''
 loop do
