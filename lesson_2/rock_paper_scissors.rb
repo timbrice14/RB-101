@@ -4,6 +4,21 @@ def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
+def translate_choice(choice)
+  case choice
+  when 'r'
+    'rock'
+  when 'p'
+    'paper'
+  when 'sc'
+    'scissors'
+  when 'l'
+    'lizard'
+  when 'sp'
+    'spock'
+  end
+end
+
 def win?(first, second)
   game_outcomes = { rock: ['lizard', 'scissors'],
                     paper: ['rock', 'spock'],
@@ -25,9 +40,10 @@ end
 
 loop do
   choice = ''
+  valid_short_choices = %w(r p sc l sp)
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}")
-    choice = Kernel.gets().chomp()
+    prompt("Choose one: #{valid_short_choices.join(', ')}")
+    choice = translate_choice(Kernel.gets().chomp())
 
     if VALID_CHOICES.include?(choice)
       break
