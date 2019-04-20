@@ -7,18 +7,22 @@ def display_welcome
 end
 
 def retrieve_user_name
-  name = ''
+  user_name = ''
   loop do
-    name = gets.chomp
+    user_name = gets.chomp
 
-    if name.strip.empty?
+    if user_name.strip.empty?
       puts messages('invalid_name')
     else
       break
     end
   end
 
-  puts format(messages('user_input'), name: name)
+  user_name
+end
+
+def display_greeting(user_name)
+  puts format(messages('user_input'), name: user_name)
 end
 
 def retrieve_total_amount
@@ -99,7 +103,8 @@ def messages(message)
 end
 
 display_welcome
-retrieve_user_name
+user_name = retrieve_user_name
+display_greeting(user_name)
 total_amount = retrieve_total_amount
 annual_percentage_rate = retrieve_apr
 loan_duration = retrieve_loan_duration
