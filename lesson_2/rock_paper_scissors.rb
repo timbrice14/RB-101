@@ -81,7 +81,7 @@ loop do
     player_score += 1 if result == 'player'
     computer_score += 1 if result == 'computer'
 
-    grand_winner = determine_grand_winner(player_score, computer_score)
+    grand_winner = grand_winner?(player_score, computer_score)
 
     if grand_winner
       prompt("Player is grand winner") if player_score == 5
