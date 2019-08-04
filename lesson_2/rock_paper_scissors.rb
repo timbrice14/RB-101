@@ -96,7 +96,7 @@ loop do
     end
   end
 
-  prompt("Do you want to play again?")
+  prompt("Do you want to play again? (Y or N)")
   answer = Kernel.gets().chomp()
   break unless answer.downcase.start_with?('y')
 end
