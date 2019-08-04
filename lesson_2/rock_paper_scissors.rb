@@ -58,9 +58,13 @@ loop do
   player_score = 0
   computer_score = 0
 
+  prompt("The first player to 5 will win!")
+
   loop do
     choice = ''
     valid_short_choices = %w(r p sc l sp)
+
+    prompt("The current score is Player: #{player_score} Computer: #{computer_score}")
 
     loop do
       prompt("Choose one: #{valid_short_choices.join(', ')}")
