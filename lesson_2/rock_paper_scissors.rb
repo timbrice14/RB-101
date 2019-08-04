@@ -67,7 +67,7 @@ loop do
     prompt("The current score is Player: #{player_score} Computer: #{computer_score}")
 
     loop do
-      prompt("Choose one: #{valid_short_choices.join(', ')}")
+      prompt("Choose one: [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock")
       choice = translate_choice(Kernel.gets().chomp())
 
       if VALID_CHOICES.include?(choice)
