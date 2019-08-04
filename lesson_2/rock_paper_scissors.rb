@@ -62,7 +62,6 @@ loop do
 
   loop do
     choice = ''
-    valid_short_choices = %w(r p sc l sp)
 
     prompt("The current score is Player: #{player_score} Computer: #{computer_score}")
 
