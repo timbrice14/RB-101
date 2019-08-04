@@ -63,7 +63,8 @@ loop do
   loop do
     choice = ''
 
-    prompt("The current score is Player: #{player_score} Computer: #{computer_score}")
+    prompt("The current score is Player: #{player_score} Computer:
+      #{computer_score}")
 
     loop do
       prompt("Choose one: [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock")
