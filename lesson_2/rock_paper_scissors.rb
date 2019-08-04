@@ -48,12 +48,8 @@ def display_result(result)
   end
 end
 
-def determine_grand_winner(player_score, computer_score)
-  if player_score >= 5 || computer_score >= 5
-    true
-  else
-    false
-  end
+def grand_winner?(player_score, computer_score)
+  player_score >= 5 || computer_score >= 5
 end
 
 loop do
