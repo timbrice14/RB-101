@@ -55,6 +55,7 @@ def say_winner(player_total, computer_total)
 end
 
 loop do
+  system('clear')
   deck = %w(Ace Ace Ace Ace 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8
             8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10)
   deck.shuffle!
