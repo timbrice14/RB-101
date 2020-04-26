@@ -1,3 +1,4 @@
+VALID_CHOICES = %w(hit h stay s)
 ACE_HIGH_VALUE = 11
 ACE_LOW_VALUE = 1
 
@@ -76,9 +77,15 @@ loop do
   loop do
     player_total = calculate_total(player_hand)
     puts "Player total is #{player_total}"
-    puts "hit or stay?"
-    answer = gets.chomp
-    break if answer == "stay"
+
+    answer = ''
+    loop do
+      puts "(h)it or (s)tay?"
+      answer = gets.chomp
+      break if VALID_CHOICES.include?(answer)
+      puts "Please select a valid choice"
+    end
+    break if answer == "stay" || answer == "s"
 
     puts "Player dealt #{deck[card_count]}"
     player_hand << deck[card_count]
