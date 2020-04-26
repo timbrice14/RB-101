@@ -35,10 +35,10 @@ def say_score(player_total, computer_total)
 end
 
 def determine_winner(player_total, computer_total)
-  if player_total > computer_total
+  if busted?(computer_total) || player_total > computer_total
     'Player'
-  elsif computer_total > player_total
-    'Computer'
+  elsif busted?(player_total) || computer_total > player_total
+    'Player'
   else
     'Tie'
   end
@@ -98,12 +98,12 @@ loop do
     end
   end
 
-  puts "Computer flips up: #{computer_hand[0]}"
+  puts "Computer flips up: #{computer_down_card}"
   computer_total = calculate_total(computer_hand)
-  puts "Computer has a total of #{calculate_total(computer_hand)}"
 
   if busted?(player_total)
-    puts "Computer wins!"
+    say_score(player_total, computer_total)
+    say_winner(player_total, computer_total)
   else
     until computer_total >= 17
       puts "Computer dealt #{deck[card_count]}"
@@ -111,8 +111,8 @@ loop do
       computer_total = calculate_total(computer_hand)
 
       if busted?(computer_total)
-        puts "Computer has #{computer_total}"
-        puts "Computer busted! Player wins!"
+        say_score(player_total, computer_total)
+        say_winner(player_total, computer_total)
         break
       end
       card_count += 1
