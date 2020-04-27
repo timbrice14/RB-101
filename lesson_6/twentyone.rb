@@ -8,9 +8,9 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
-def welcome_message(player_score, computer_score)
+def welcome_message(player_score, dealer_score)
   prompt "Welcome to #{WINNING_TOTAL}! The first player to 5 wins! The " \
-    "current score is: Player: #{player_score} Computer: #{computer_score}"
+    "current score is: Player: #{player_score} Dealer: #{dealer_score}"
 end
 
 def busted?(sum)
@@ -41,24 +41,24 @@ def calculate_total(hand)
   end
 end
 
-def say_score(player_total, computer_total)
-  prompt "Player has #{player_total}. Computer has #{computer_total}."
+def say_score(player_total, dealer_total)
+  prompt "Player has #{player_total}. Dealer has #{dealer_total}."
 end
 
-def determine_winner(player_total, computer_total)
-  if busted?(computer_total) || player_total > computer_total
+def determine_winner(player_total, dealer_total)
+  if busted?(dealer_total) || player_total > dealer_total
     'Player'
-  elsif busted?(player_total) || computer_total > player_total
-    'Computer'
+  elsif busted?(player_total) || dealer_total > player_total
+    'Dealer'
   else
     'Tie'
   end
 end
 
-def say_winner(player_total, computer_total)
-  case determine_winner(player_total, computer_total)
-  when 'Computer'
-    prompt 'Computer wins!'
+def say_winner(player_total, dealer_total)
+  case determine_winner(player_total, dealer_total)
+  when 'Dealer'
+    prompt 'Dealer wins!'
   when 'Player'
     prompt 'Player wins!'
   else
@@ -66,24 +66,24 @@ def say_winner(player_total, computer_total)
   end
 end
 
-computer_score = 0
+dealer_score = 0
 player_score = 0
 loop do
   system('clear')
-  prompt welcome_message(player_score, computer_score)
+  prompt welcome_message(player_score, dealer_score)
   deck = %w(Ace Ace Ace Ace 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8
             8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10)
   deck.shuffle!
 
   first_player_card = deck.shift
-  computer_down_card = deck.shift
+  dealer_down_card = deck.shift
   second_player_card = deck.shift
-  computer_up_card = deck.shift
+  dealer_up_card = deck.shift
 
   player_hand = [first_player_card, second_player_card]
-  computer_hand = [computer_down_card, computer_up_card]
+  dealer_hand = [dealer_down_card, dealer_up_card]
 
-  prompt "Dealer has: #{computer_hand[1]} and unknown card"
+  prompt "Dealer has: #{dealer_hand[1]} and unknown card"
   prompt "You have: #{player_hand[0]} and #{player_hand[1]}"
 
   player_total = 0
@@ -110,39 +110,39 @@ loop do
     end
   end
 
-  computer_total = calculate_total(computer_hand)
-  prompt "Computer flips up a #{computer_down_card} to go with the " \
-    "#{computer_up_card} for a total of #{computer_total}"
+  dealer_total = calculate_total(dealer_hand)
+  prompt "dealer flips up a #{dealer_down_card} to go with the " \
+    "#{dealer_up_card} for a total of #{dealer_total}"
 
   if busted?(player_total)
-    say_score(player_total, computer_total)
-    say_winner(player_total, computer_total)
-    computer_score += 1
+    say_score(player_total, dealer_total)
+    say_winner(player_total, dealer_total)
+    dealer_score += 1
   else
-    until computer_total >= DEALER_STAY
-      prompt "Computer dealt #{deck[0]}"
-      computer_hand << deck.shift
-      computer_total = calculate_total(computer_hand)
+    until dealer_total >= DEALER_STAY
+      prompt "Dealer dealt #{deck[0]}"
+      dealer_hand << deck.shift
+      dealer_total = calculate_total(dealer_hand)
 
-      if busted?(computer_total)
-        say_score(player_total, computer_total)
-        say_winner(player_total, computer_total)
+      if busted?(dealer_total)
+        say_score(player_total, dealer_total)
+        say_winner(player_total, dealer_total)
         player_score += 1
         break
       end
     end
   end
 
-  unless busted?(computer_total) || busted?(player_total)
-    say_score(player_total, computer_total)
-    say_winner(player_total, computer_total)
-    winner = determine_winner(player_total, computer_score)
+  unless busted?(dealer_total) || busted?(player_total)
+    say_score(player_total, dealer_total)
+    say_winner(player_total, dealer_total)
+    winner = determine_winner(player_total, dealer_total)
     player_score += 1 if winner == 'Player'
-    computer_score += 1 if winner == 'Computer'
+    dealer_score += 1 if winner == 'Dealer'
   end
 
-  if computer_score == 5
-    prompt "Computer wins the match!"
+  if dealer_score == 5
+    prompt "Dealer wins the match!"
     break
   elsif player_score == 5
     prompt "Player wins the match!"
