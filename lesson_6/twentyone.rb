@@ -1,3 +1,6 @@
+require 'pry'
+require 'pry-byebug'
+
 VALID_CHOICES = %w(hit h stay s)
 ACE_HIGH_VALUE = 11
 ACE_LOW_VALUE = 1
@@ -61,10 +64,10 @@ loop do
             8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10)
   deck.shuffle!
 
-  first_player_card = deck[0]
-  computer_down_card = deck[1]
-  second_player_card = deck[2]
-  computer_up_card = deck[3]
+  first_player_card = deck.shift
+  computer_down_card = deck.shift
+  second_player_card = deck.shift
+  computer_up_card = deck.shift
 
   player_hand = [first_player_card, second_player_card]
   computer_hand = [computer_down_card, computer_up_card]
@@ -72,7 +75,6 @@ loop do
   puts "Dealer has: #{computer_hand[1]} and unknown card"
   puts "You have: #{player_hand[0]} and #{player_hand[1]}"
 
-  card_count = 4
   player_total = 0
   loop do
     player_total = calculate_total(player_hand)
@@ -87,10 +89,9 @@ loop do
     end
     break if answer == "stay" || answer == "s"
 
-    puts "Player dealt #{deck[card_count]}"
-    player_hand << deck[card_count]
+    puts "Player dealt #{deck[0]}"
+    player_hand << deck.shift
     player_total = calculate_total(player_hand)
-    card_count += 1
 
     if busted?(player_total)
       puts "Player busted!"
@@ -98,16 +99,17 @@ loop do
     end
   end
 
-  puts "Computer flips up: #{computer_down_card}"
   computer_total = calculate_total(computer_hand)
+  puts "Computer flips up a #{computer_down_card} to go with the #{computer_up_card} for a total of #{computer_total}"
 
   if busted?(player_total)
     say_score(player_total, computer_total)
     say_winner(player_total, computer_total)
   else
     until computer_total >= 17
-      puts "Computer dealt #{deck[card_count]}"
-      computer_hand << deck[card_count]
+      binding.pry
+      puts "Computer dealt #{deck[0]}"
+      computer_hand << deck.shift
       computer_total = calculate_total(computer_hand)
 
       if busted?(computer_total)
@@ -115,7 +117,6 @@ loop do
         say_winner(player_total, computer_total)
         break
       end
-      card_count += 1
     end
   end
 
