@@ -1,6 +1,5 @@
-require 'pry'
-require 'pry-byebug'
-
+WINNING_TOTAL = 21
+DEALER_STAY = 17
 VALID_CHOICES = %w(hit h stay s)
 ACE_HIGH_VALUE = 11
 ACE_LOW_VALUE = 1
@@ -10,12 +9,12 @@ def prompt(msg)
 end
 
 def welcome_message(player_score, computer_score)
-  prompt "Welcome to 21! The first player to 5 wins! The current score is: " \
-    "Player: #{player_score} Computer: #{computer_score}"
+  prompt "Welcome to #{WINNING_TOTAL}! The first player to 5 wins! The " \
+    "current score is: Player: #{player_score} Computer: #{computer_score}"
 end
 
 def busted?(sum)
-  sum > 21
+  sum > WINNING_TOTAL
 end
 
 def calculate_sum_with_ace(sum, ace_count)
@@ -120,7 +119,7 @@ loop do
     say_winner(player_total, computer_total)
     computer_score += 1
   else
-    until computer_total >= 17
+    until computer_total >= DEALER_STAY
       prompt "Computer dealt #{deck[0]}"
       computer_hand << deck.shift
       computer_total = calculate_total(computer_hand)
@@ -152,5 +151,5 @@ loop do
 
   prompt "Press any key to deal the next hand"
   answer = gets.chomp
-  next unless answer = ''
+  next unless answer == ''
 end
