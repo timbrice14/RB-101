@@ -118,6 +118,7 @@ loop do
   if busted?(player_total)
     say_score(player_total, computer_total)
     say_winner(player_total, computer_total)
+    computer_score += 1
   else
     until computer_total >= 17
       prompt "Computer dealt #{deck[0]}"
@@ -127,6 +128,7 @@ loop do
       if busted?(computer_total)
         say_score(player_total, computer_total)
         say_winner(player_total, computer_total)
+        player_score += 1
         break
       end
     end
@@ -135,9 +137,16 @@ loop do
   unless busted?(computer_total) || busted?(player_total)
     say_score(player_total, computer_total)
     say_winner(player_total, computer_total)
+    winner = determine_winner(player_total, computer_score)
+    player_score += 1 if winner == 'Player'
+    computer_score += 1 if winner == 'Computer'
   end
 
-  p "Play again?"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?("y")
+  if computer_score == 5
+    prompt "Computer wins the match!"
+    break
+  elsif player_score == 5
+    prompt "Player wins the match!"
+    break
+  end
 end
