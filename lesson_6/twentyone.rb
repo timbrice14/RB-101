@@ -41,7 +41,7 @@ def determine_winner(player_total, computer_total)
   if busted?(computer_total) || player_total > computer_total
     'Player'
   elsif busted?(player_total) || computer_total > player_total
-    'Player'
+    'Computer'
   else
     'Tie'
   end
@@ -100,14 +100,14 @@ loop do
   end
 
   computer_total = calculate_total(computer_hand)
-  puts "Computer flips up a #{computer_down_card} to go with the #{computer_up_card} for a total of #{computer_total}"
+  puts "Computer flips up a #{computer_down_card} to go with the " \
+    "#{computer_up_card} for a total of #{computer_total}"
 
   if busted?(player_total)
     say_score(player_total, computer_total)
     say_winner(player_total, computer_total)
   else
     until computer_total >= 17
-      binding.pry
       puts "Computer dealt #{deck[0]}"
       computer_hand << deck.shift
       computer_total = calculate_total(computer_hand)
