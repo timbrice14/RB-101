@@ -26,18 +26,33 @@ def calculate_sum_with_ace(sum, ace_count)
              ace_value_total
            end
   else
-    busted?(sum + ACE_HIGH_VALUE) ? sum += ACE_LOW_VALUE : sum += ACE_HIGH_VALUE
+    sum += if busted?(sum + ACE_HIGH_VALUE)
+             ACE_LOW_VALUE
+           else
+             ACE_HIGH_VALUE
+           end
   end
   sum
 end
 
+def get_points(card)
+  case card
+  when 'A' then 'Ace'
+  when 'J', 'Q', 'K' then 10
+  else
+    card.to_i
+  end
+end
+
 def calculate_total(hand)
+  hand = hand.map { |h| get_points(h[0]) }
+
   if hand.include?("Ace")
-    sum = hand.reject { |card| card == "Ace" }.map(&:to_i).sum
+    sum = hand.reject { |card| card == "Ace" }.sum
     ace_count = hand.count("Ace")
     calculate_sum_with_ace(sum, ace_count)
   else
-    hand.map(&:to_i).sum
+    hand.sum
   end
 end
 
@@ -72,13 +87,38 @@ def say_winner(player_total, dealer_total)
   end
 end
 
+def translate_card(card)
+  case card
+  when 'A' then 'Ace'
+  when 'J' then 'Jack'
+  when 'Q' then 'Queen'
+  when 'K' then 'King'
+  else
+    card
+  end
+end
+
+def translate_suit(suit)
+  case suit
+  when 'h' then 'Hearts'
+  when 'c' then 'Clubs'
+  when 'd' then 'Diamonds'
+  when 's' then 'Spades'
+  end
+end
+
+def display_hand(hand)
+  "#{translate_card(hand[0])} of #{translate_suit(hand[1])}"
+end
+
 dealer_score = 0
 player_score = 0
 loop do
   system('clear')
   prompt welcome_message(player_score, dealer_score)
-  deck = %w(Ace Ace Ace Ace 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8
-            8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10)
+  cards = %w(A 2 3 4 5 6 7 8 9 10 J Q K)
+  suits = %w(h s c d)
+  deck = cards.product(suits)
   deck.shuffle!
 
   first_player_card = deck.shift
@@ -89,8 +129,9 @@ loop do
   player_hand = [first_player_card, second_player_card]
   dealer_hand = [dealer_down_card, dealer_up_card]
 
-  prompt "Dealer has: #{dealer_hand[1]} and unknown card"
-  prompt "You have: #{player_hand[0]} and #{player_hand[1]}"
+  prompt "Dealer has: #{display_hand(dealer_up_card)} and unknown card"
+  prompt "You have: #{display_hand(first_player_card)} and " \
+    "#{display_hand(second_player_card)}"
 
   player_total = 0
   loop do
@@ -106,7 +147,7 @@ loop do
     end
     break if answer == "stay" || answer == "s"
 
-    prompt "Player dealt #{deck[0]}"
+    prompt "Player dealt #{display_hand(deck[0])}"
     player_hand << deck.shift
     player_total = calculate_total(player_hand)
 
@@ -117,8 +158,9 @@ loop do
   end
 
   dealer_total = calculate_total(dealer_hand)
-  prompt "Dealer flips up a #{dealer_down_card} to go with the " \
-    "#{dealer_up_card} for a total of #{dealer_total}"
+  prompt "Dealer flips up a #{display_hand(dealer_down_card)} of " \
+    "to go with the #{display_hand(dealer_up_card)} " \
+    "for a total of #{dealer_total}"
 
   if busted?(player_total)
     say_score(player_total, dealer_total)
@@ -126,7 +168,7 @@ loop do
     dealer_score += 1
   else
     until dealer_total >= DEALER_STAY
-      prompt "Dealer dealt #{deck[0]}"
+      prompt "Dealer dealt #{display_hand(deck[0])}"
       dealer_hand << deck.shift
       dealer_total = calculate_total(dealer_hand)
 
