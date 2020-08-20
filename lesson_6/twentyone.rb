@@ -197,7 +197,7 @@ loop do
     break
   end
 
-  prompt "Press any key to deal the next hand"
+  prompt "Press enter to deal the next hand"
   answer = gets.chomp
   next unless answer == ''
 end
