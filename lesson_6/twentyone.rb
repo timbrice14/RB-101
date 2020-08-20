@@ -60,17 +60,21 @@ def say_score(player_total, dealer_total)
   prompt "Player has #{player_total}. Dealer has #{dealer_total}."
 end
 
+def compare_totals(player_total, dealer_total)
+  if player_total > dealer_total
+    'Player'
+  elsif dealer_total > player_total
+    'Dealer'
+  end
+end
+
 def determine_winner(player_total, dealer_total)
   if busted?(dealer_total)
     'Player'
   elsif busted?(player_total)
     'Dealer'
   else
-    if player_total > dealer_total
-      'Player'
-    elsif dealer_total > player_total
-      'Dealer'
-    end
+    compare_totals(player_total, dealer_total)
   end
 end
 
