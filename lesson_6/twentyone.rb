@@ -61,29 +61,25 @@ def say_score(player_total, dealer_total)
 end
 
 def determine_winner(player_total, dealer_total)
-  if player_total > dealer_total
+  if busted?(dealer_total)
     'Player'
-  elsif dealer_total > player_total
+  elsif busted?(player_total)
     'Dealer'
   else
-    'Tie'
+    if player_total > dealer_total
+      'Player'
+    elsif dealer_total > player_total
+      'Dealer'
+    end
   end
 end
 
 def say_winner(player_total, dealer_total)
-  if busted?(dealer_total)
-    prompt 'Player wins!'
-  elsif busted?(player_total)
-    prompt 'Dealer wins'
+  case determine_winner(player_total, dealer_total)
+  when 'Player' then prompt 'Player wins!'
+  when 'Dealer' then prompt 'Dealer wins!'
   else
-    case determine_winner(player_total, dealer_total)
-    when 'Dealer'
-      prompt 'Dealer wins!'
-    when 'Player'
-      prompt 'Player wins!'
-    else
-      prompt "It's a tie!"
-    end
+    prompt "It's a tie!"
   end
 end
 
