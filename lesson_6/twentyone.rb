@@ -1,5 +1,3 @@
-require 'pry'
-
 WINNING_TOTAL = 21
 DEALER_STAY = 17
 VALID_CHOICES = %w(hit h stay s)
